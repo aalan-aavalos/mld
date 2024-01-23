@@ -20,6 +20,7 @@ import { MapaComponent } from './pages/mapa/mapa.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ZoomComponent } from './components/zoom/zoom.component';
+import { LeafletMapComponent } from './components/leaflet-map/leaflet-map.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { ZoomComponent } from './components/zoom/zoom.component';
     EditUserComponent,
     MapaComponent,
     HomeComponent,
-    ZoomComponent
+    ZoomComponent,
+    LeafletMapComponent
   ],
   imports: [
     BrowserModule,

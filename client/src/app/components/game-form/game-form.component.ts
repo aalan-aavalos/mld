@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Activities } from 'src/app/interfaces/actividades';
 import {GamesService} from '../../services/games.service';
 import { Usuarios } from 'src/app/interfaces/usuarios'
@@ -17,6 +17,8 @@ declare var paypal: { Buttons: (arg0: { createOrder: (data: any, actions: { orde
 export class GameFormComponent implements OnInit{
 
   
+
+
   inputValue: number = 0.0
 
   mostrarValor() {
@@ -27,19 +29,6 @@ export class GameFormComponent implements OnInit{
 
 
   @ViewChild('map') mapContainer: ElementRef | undefined;
-
-ngAfterViewInit() {
-
-  
-  this.act.forEach((item: { idActividad: any; Lugar: { latitude: number; longitude: number; }; }) => {
-    const map = L.map(`map-${item.idActividad}`).setView([item.Lugar.latitude, item.Lugar.longitude], 13); // Assuming `item.Lugar` has latitude and longitude properties
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    L.marker([item.Lugar.latitude, item.Lugar.longitude]).addTo(map);
-  });
-}
 
   servicio = {
     descripcion: 'pago',
