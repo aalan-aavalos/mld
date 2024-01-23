@@ -20,10 +20,16 @@ export class AddActComponent implements OnInit {
   Par: any = [];
   Est: any = [];
 
-
+  changeLugar(lugar: string) {
+    this.activities.Lugar = lugar;
+  }
 
   constructor(private gameService: GamesService, private router: Router, private activateRouter: ActivatedRoute, private placeSvc: PlacesService) { }
   ngOnInit(): void {
+
+    if (this.activities.Lugar == '') {
+      this.changeLugar('21.168709834371708, -100.93142807890231')
+    }
 
     this.contador = 0;
 
@@ -96,6 +102,14 @@ export class AddActComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
+          
+          alert(this.activities.Lugar)
+          /**
+          if (this.activities.Lugar == '') {
+            this.changeLugar('21.168709834371708, -100.93142807890231')
+          }
+           */
+          //alert(this.activities.Lugar)
           this.router.navigate(['/gestion']);
         },
         err => console.error(err)
@@ -123,15 +137,13 @@ export class AddActComponent implements OnInit {
   ubicacion: any;
   contador = 0;
 
-  lugar = '';
 
-  changeLugar(lugar: string) {
-    this.activities.Lugar = lugar;
-  }
+
+  
 
   ngAfterViewInit() {
     let previousMarker: Marker;
-    
+
     setTimeout(() => {
       this.ubicacion = localStorage.getItem('geolocalizar');
       this.map = new Map('map').setView(JSON.parse(this.ubicacion), 13);
@@ -143,17 +155,21 @@ export class AddActComponent implements OnInit {
       this.map.on('click', (e: { latlng: any; }) => {
         const latlng = e.latlng;
         const marker = L.marker(latlng);
-        
+
         console.log(latlng.lat, latlng.lng);
-        
+
         this.map.addLayer(marker);
 
         if (previousMarker) {
           previousMarker.remove();
-        } 
+        }
+
+        if (this.activities.Lugar == '') {
+          this.changeLugar('21.168709834371708, -100.93142807890231')
+        }
         previousMarker = marker;
 
-        this.changeLugar(`${(latlng.lat).toFixed(6)}, ${(latlng.lng).toFixed(6)}`)        
+        this.changeLugar(`${(latlng.lat).toFixed(6)}, ${(latlng.lng).toFixed(6)}`)
       });
 
     }, 2000);
@@ -163,14 +179,16 @@ export class AddActComponent implements OnInit {
     setTimeout(() => {
       marker(this.geo).addTo(this.map).bindPopup("<strong>Esta es tu ubicación</strong>").openPopup();
     }, 2000);
-
-
+    
+    this.changeLugar(this.geo)
+    
     routing.control({
       waypoints: [
         latLng(this.geo),
-        latLng([21.168709834371708, -100.93142807890231])
+        
       ]
     }).addTo(this.map);
+    
   }
 
   recargar() {
