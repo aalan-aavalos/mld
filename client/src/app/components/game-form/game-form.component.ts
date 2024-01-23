@@ -4,6 +4,8 @@ import {GamesService} from '../../services/games.service';
 import { Usuarios } from 'src/app/interfaces/usuarios'
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import * as L from 'leaflet';
+
 
 declare var paypal: { Buttons: (arg0: { createOrder: (data: any, actions: { order: { create: (arg0: { purchase_units: { description: string; amount: { currency_code: string; value: number; }; }[]; }) => any; }; }) => any; onApprove: (data: any, actions: { order: { capture: () => any; }; }) => Promise<void>; onError: (err: any) => void; }) => { (): any; new(): any; render: { (arg0: any): void; new(): any; }; }; };
 
@@ -14,6 +16,7 @@ declare var paypal: { Buttons: (arg0: { createOrder: (data: any, actions: { orde
 })
 export class GameFormComponent implements OnInit{
 
+  
   inputValue: number = 0.0
 
   mostrarValor() {
@@ -21,6 +24,22 @@ export class GameFormComponent implements OnInit{
   }
 
   @ViewChild('paypal', {static: true}) paypalElement : ElementRef | any;
+
+
+  @ViewChild('map') mapContainer: ElementRef | undefined;
+
+ngAfterViewInit() {
+
+  
+  this.act.forEach((item: { idActividad: any; Lugar: { latitude: number; longitude: number; }; }) => {
+    const map = L.map(`map-${item.idActividad}`).setView([item.Lugar.latitude, item.Lugar.longitude], 13); // Assuming `item.Lugar` has latitude and longitude properties
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([item.Lugar.latitude, item.Lugar.longitude]).addTo(map);
+  });
+}
 
   servicio = {
     descripcion: 'pago',
@@ -40,6 +59,9 @@ export class GameFormComponent implements OnInit{
  
   constructor(private gameService: GamesService, private authService: AuthService,private router: Router){}
   ngOnInit(): void {
+
+
+    
 
     paypal
     .Buttons({

@@ -131,6 +131,7 @@ export class AddActComponent implements OnInit {
 
   ngAfterViewInit() {
     let previousMarker: Marker;
+    
     setTimeout(() => {
       this.ubicacion = localStorage.getItem('geolocalizar');
       this.map = new Map('map').setView(JSON.parse(this.ubicacion), 13);

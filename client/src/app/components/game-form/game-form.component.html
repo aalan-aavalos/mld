@@ -13,12 +13,15 @@
     </a>
   </li>
 
-
+  
 
   <br>
     <br>
     <h2 class="text-center font-weight mb-4 text-black" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Tabla de actividades</h2>
     <br>
+
+    
+
       <div class="container" >
         <table class="table table-striped">
           <thead >
@@ -43,7 +46,8 @@
               <td>{{item.Estatus}}</td> 
               <td>{{item.Fecha_de_inicio | date: 'yyyy-MM-dd'}}</td>
               <td>{{item.Fecha_de_fin | date: 'yyyy-MM-dd'}}</td>
-              <td>{{item.Lugar}}</td>
+              <td>{{item.Lugar}}</td>              
+              <td><div id="map-{{ item.idActividad }}" style="height: 300px;"></div></td>
               <td>
                 <a [routerLink]="['/edit', item.idActividad]" (click)="editact(item.idActividad)" type="button" class="btn btn-primary">Modificar</a>
                  </td>
