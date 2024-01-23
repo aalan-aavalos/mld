@@ -102,7 +102,7 @@ export class AddActComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
-          
+
           alert(this.activities.Lugar)
           /**
           if (this.activities.Lugar == '') {
@@ -139,7 +139,7 @@ export class AddActComponent implements OnInit {
 
 
 
-  
+
 
   ngAfterViewInit() {
     let previousMarker: Marker;
@@ -179,16 +179,16 @@ export class AddActComponent implements OnInit {
     setTimeout(() => {
       marker(this.geo).addTo(this.map).bindPopup("<strong>Esta es tu ubicación</strong>").openPopup();
     }, 2000);
-    
+
     this.changeLugar(this.geo)
-    
+
     routing.control({
       waypoints: [
         latLng(this.geo),
-        
+
       ]
     }).addTo(this.map);
-    
+
   }
 
   recargar() {
